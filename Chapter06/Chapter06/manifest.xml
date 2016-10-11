@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--To improve performance, Microsoft Office Communications Server 2007 Speech Server can pre-load and cache application resources, -->
+<!--such as grammar files and prompt databases. Use this file to specify resources to pre-load.-->
+<manifest version="2.0">
+  <resource src="Grammars/Library.grxml" type="Grammar" />
+  <resource src="Grammars/Chapter06.grxml" type="Grammar" />
+  <!--Add other grammar resources here-->
+  <resource src="Prompts/Chapter06Prompts.prompts" type="PromptDB" />
+  <!--Add other prompt resources here-->
+</manifest>

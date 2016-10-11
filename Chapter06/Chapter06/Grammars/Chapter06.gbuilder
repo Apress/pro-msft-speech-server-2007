@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DM_Grammar xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SerialNumber>0</SerialNumber>
+  <LabelId>Grammar</LabelId>
+  <IDType>TextType</IDType>
+  <HighlightValue>false</HighlightValue>
+  <IsExpanded>true</IsExpanded>
+  <DMTreeKeyword>
+    <SerialNumber>1</SerialNumber>
+    <LabelId>Keyword</LabelId>
+    <IDType>TextType</IDType>
+    <HighlightValue>false</HighlightValue>
+    <IsExpanded>true</IsExpanded>
+  </DMTreeKeyword>
+  <DMTreeResponse>
+    <SerialNumber>4</SerialNumber>
+    <LabelId>Response</LabelId>
+    <IDType>TextType</IDType>
+    <HighlightValue>false</HighlightValue>
+    <IsExpanded>true</IsExpanded>
+  </DMTreeResponse>
+  <DocVersion>4096</DocVersion>
+  <NextSNValue>7</NextSNValue>
+  <SelectedLangIndex>0</SelectedLangIndex>
+  <LangListDM>
+    <LanguageID>en-US</LanguageID>
+  </LangListDM>
+  <LangListDM>
+    <LanguageID>DTMF</LanguageID>
+    <LanguageFilePath />
+  </LangListDM>
+  <LexiconRefContent>
+    <ListLanguageContent>
+      <RefLanguageID>en-US</RefLanguageID>
+      <LexiconRefUri>..\Lexicons\Chapter06.lex</LexiconRefUri>
+    </ListLanguageContent>
+  </LexiconRefContent>
+</DM_Grammar>

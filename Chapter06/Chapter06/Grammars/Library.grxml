@@ -1,0 +1,2924 @@
+<?xml version="1.0"?>
+<!--
+****************************************************************
+** Copyright (c) Microsoft Corporation. All rights reserved. **
+****************************************************************
+The example phone numbers depicted in the examples herein are fictitious.  
+No association with any real company, organization, product, domain name, 
+email address, logo, person, places, or events is intended or should be
+inferred.
+-->
+<grammar xml:lang="en-US" tag-format="semantics-ms/1.0" version="1.0" mode="voice" xmlns="http://www.w3.org/2001/06/grammar" sapi:alphabet="x-microsoft-ups" xmlns:sapi="http://schemas.microsoft.com/Speech/2002/06/SRGSExtensions">
+	<!--  Category: Confirmation-->
+	<!--  Description: Confirmation rules provide access to simple dialog confirmation sets. These include Yes, No and Cancel-->
+	<!--    subclasses. The responses are generic and are independent of the prompt used to solicit the response-->
+	<!--  -->
+	<!-- $Confirmation._value: string ["Yes", "No", "Cancel"] -->
+	<rule id="Confirmation" scope="public">
+		<example>yes</example>
+		<example>no</example>
+		<example>cancel</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Confirmation_Yes" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Confirmation_No" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Confirmation_Cancel" type="application/srgs+xml"/>
+			</item>
+		</one-of>
+		<tag>$ = $$</tag>
+	</rule>
+	<!-- $Confirmation_YesNo._value: string ["Yes", "No"] -->
+	<rule id="Confirmation_YesNo" scope="public">
+		<example>yes</example>
+		<example>no</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Confirmation_Yes" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Confirmation_No" type="application/srgs+xml"/>
+			</item>
+		</one-of>
+		<tag>$ = $$</tag>
+	</rule>
+	<!-- $Confirmation_Yes._value: string ["Yes"] -->
+	<rule id="Confirmation_Yes" scope="public">
+		<example>yes</example>
+		<example>yes please</example>
+		<one-of>
+			<item>yes</item>
+			<item>yeah</item>
+			<item>yep</item>
+			<item>ok</item>
+		</one-of>
+		<item repeat="0-1">please</item>
+		<tag>$._value = "Yes";</tag>
+	</rule>
+	<!-- $Confirmation_No._value: string ["No"] -->
+	<rule id="Confirmation_No" scope="public">
+		<example>no</example>
+		<example>no thank you</example>
+		<one-of>
+			<item>no</item>
+			<item>nope</item>
+		</one-of>
+		<item repeat="0-1">
+			<one-of>
+				<item>thank you</item>
+				<item>thanks</item>
+			</one-of>
+		</item>
+		<tag>$._value = "No";</tag>
+	</rule>
+	<!-- $Confirmation_Cancel._value: string ["Cancel"] -->
+	<rule id="Confirmation_Cancel" scope="public">
+		<example>cancel</example>
+		<example>stop</example>
+		<example>go back</example>
+		<one-of>
+			<item>stop</item>
+			<item>
+				<item repeat="0-1">go</item>
+				<item>back</item>
+			</item>
+			<item>cancel</item>
+			<item>return</item>
+		</one-of>
+		<tag>$._value = "Cancel";</tag>
+	</rule>
+	<!--  Category: Cardinal-->
+	<!--  Description: Cardinal rules describe numeric values in the range of zero to 1 million. The numeric range is encoded in-->
+	<!--    the rule name. For example, Cardinal_1_to_9 will contain numbers in the range of 1...9 (i.e. "one", "two", ..., "nine").-->
+	<!--    The <Cardinal> rule covers the full range.-->
+	<!--    All return an integer _value semantic item.-->
+	<!-- $Cardinal._value: integer [0...1,000,000] -->
+	<rule id="Cardinal" scope="public">
+		<example>one</example>
+		<example>nine thousand</example>
+		<example>four hundred and fifty six thousand three hundred and sixty two</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1000_to_999999" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item repeat="0-1">
+					<one-of>
+						<item>a</item>
+						<item>one</item>
+					</one-of>
+				</item>
+				<item>million</item>
+				<tag>$._value = 1000000;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_0_to_9._value: integer [0...9] -->
+	<rule id="Cardinal_0_to_9" scope="public">
+		<example>one</example>
+		<example>two</example>
+		<example>five</example>
+		<example>nine</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_0_to_10._value: integer [0...10] -->
+	<rule id="Cardinal_0_to_10" scope="public">
+		<example>one</example>
+		<example>two</example>
+		<example>five</example>
+		<example>ten</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item>ten</item>
+				<tag>$._value = 10;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_0_to_100._value: integer [0...100] -->
+	<rule id="Cardinal_0_to_100" scope="public">
+		<example>one</example>
+		<example>twenty three</example>
+		<example>ninety five</example>
+		<example>one hundred</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item repeat="0-1">
+					<one-of>
+						<item>a</item>
+						<item>one</item>
+					</one-of>
+				</item>
+				<item>hundred</item>
+				<tag>$._value = 100;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_0_to_1000._value: integer [0...1000] -->
+	<rule id="Cardinal_0_to_1000" scope="public">
+		<example>one</example>
+		<example>twenty three</example>
+		<example>two hundred and thirty</example>
+		<example>one thousand</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item repeat="0-1">
+					<one-of>
+						<item>a</item>
+						<item>one</item>
+					</one-of>
+				</item>
+				<item>thousand</item>
+				<tag>$._value = 1000;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_0_to_10000._value: integer [0...10000] -->
+	<rule id="Cardinal_0_to_10000" scope="public">
+		<example>one</example>
+		<example>twenty three</example>
+		<example>two hundred and thirty</example>
+		<example>ten thousand</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_9999" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item>ten thousand</item>
+				<tag>$._value = 10000;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_1_to_9._value: integer [1...9] -->
+	<rule id="Cardinal_1_to_9" scope="public">
+		<example>one</example>
+		<example>two</example>
+		<example>five</example>
+		<example>nine</example>
+		<one-of>
+			<item>
+				<item>one</item>
+				<tag>$._value = 1;</tag>
+			</item>
+			<item>
+				<item>two</item>
+				<tag>$._value = 2;</tag>
+			</item>
+			<item>
+				<item>three</item>
+				<tag>$._value = 3;</tag>
+			</item>
+			<item>
+				<item>four</item>
+				<tag>$._value = 4;</tag>
+			</item>
+			<item>
+				<item>five</item>
+				<tag>$._value = 5;</tag>
+			</item>
+			<item>
+				<item>six</item>
+				<tag>$._value = 6;</tag>
+			</item>
+			<item>
+				<item>seven</item>
+				<tag>$._value = 7;</tag>
+			</item>
+			<item>
+				<item>eight</item>
+				<tag>$._value = 8;</tag>
+			</item>
+			<item>
+				<item>nine</item>
+				<tag>$._value = 9;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_1_to_99._value: integer [1...99] -->
+	<rule id="Cardinal_1_to_99" scope="public">
+		<example>one</example>
+		<example>thirteen</example>
+		<example>fifty nine</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_10_to_19" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_20_to_99" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_1_to_999._value: integer [1...999] -->
+	<rule id="Cardinal_1_to_999" scope="public">
+		<example>one</example>
+		<example>thirteen</example>
+		<example>fifty nine</example>
+		<example>eight hundred sixty seven</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_100_to_999" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_1_to_9999._value: integer [1...9999] -->
+	<rule id="Cardinal_1_to_9999" scope="public">
+		<example>one</example>
+		<example>thirteen</example>
+		<example>fifty nine</example>
+		<example>eight hundred sixty seven</example>
+		<example>two thousand eight hundred sixty seven</example>
+		<tag>$._value = 1;</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item repeat="0-1">
+					<one-of>
+						<item>
+							<item>a</item>
+							<tag>$._value = 1;</tag>
+						</item>
+						<item>
+							<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+							<tag>$ = $$;</tag>
+						</item>
+					</one-of>
+				</item>
+				<item>thousand</item>
+				<tag>$._value = $._value * 1000;</tag>
+				<item repeat="0-1">
+					<item repeat="0-1">and</item>
+					<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value;</tag>
+				</item>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_2_to_9._value: integer [2...9] -->
+	<rule id="Cardinal_2_to_9" scope="public">
+		<example>two</example>
+		<example>five</example>
+		<example>nine</example>
+		<one-of>
+			<item>
+				<item>two</item>
+				<tag>$._value = 2;</tag>
+			</item>
+			<item>
+				<item>three</item>
+				<tag>$._value = 3;</tag>
+			</item>
+			<item>
+				<item>four</item>
+				<tag>$._value = 4;</tag>
+			</item>
+			<item>
+				<item>five</item>
+				<tag>$._value = 5;</tag>
+			</item>
+			<item>
+				<item>six</item>
+				<tag>$._value = 6;</tag>
+			</item>
+			<item>
+				<item>seven</item>
+				<tag>$._value = 7;</tag>
+			</item>
+			<item>
+				<item>eight</item>
+				<tag>$._value = 8;</tag>
+			</item>
+			<item>
+				<item>nine</item>
+				<tag>$._value = 9;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_10_to_19._value: integer [10...19] -->
+	<rule id="Cardinal_10_to_19" scope="public">
+		<example>ten</example>
+		<example>eleven</example>
+		<example>nineteen</example>
+		<one-of>
+			<item>
+				<item>ten</item>
+				<tag>$._value = 10;</tag>
+			</item>
+			<item>
+				<item>eleven</item>
+				<tag>$._value = 11;</tag>
+			</item>
+			<item>
+				<item>twelve</item>
+				<tag>$._value = 12;</tag>
+			</item>
+			<item>
+				<item>thirteen</item>
+				<tag>$._value = 13;</tag>
+			</item>
+			<item>
+				<item>fourteen</item>
+				<tag>$._value = 14;</tag>
+			</item>
+			<item>
+				<item>fifteen</item>
+				<tag>$._value = 15;</tag>
+			</item>
+			<item>
+				<item>sixteen</item>
+				<tag>$._value = 16;</tag>
+			</item>
+			<item>
+				<item>seventeen</item>
+				<tag>$._value = 17;</tag>
+			</item>
+			<item>
+				<item>eighteen</item>
+				<tag>$._value = 18;</tag>
+			</item>
+			<item>
+				<item>nineteen</item>
+				<tag>$._value = 19;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_10_to_99._value: integer [10...99] -->
+	<rule id="Cardinal_10_to_99" scope="public">
+		<example>twelve</example>
+		<example>seventy nine</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_10_to_19" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_20_to_99" type="application/srgs+xml"/>
+			</item>
+		</one-of>
+		<tag>$._value = $$._value;</tag>
+	</rule>
+	<!-- $Cardinal_20_to_29._value: integer [20...29] -->
+	<rule id="Cardinal_20_to_29" scope="public">
+		<example>twenty</example>
+		<example>twenty nine</example>
+		<item>twenty</item>
+		<tag>$._value = 20;</tag>
+		<item repeat="0-1">
+			<one-of>
+				<item>
+					<item>one</item>
+					<tag>$._value = 21;</tag>
+				</item>
+				<item>
+					<item>two</item>
+					<tag>$._value = 22;</tag>
+				</item>
+				<item>
+					<item>three</item>
+					<tag>$._value = 23;</tag>
+				</item>
+				<item>
+					<item>four</item>
+					<tag>$._value = 24;</tag>
+				</item>
+				<item>
+					<item>five</item>
+					<tag>$._value = 25;</tag>
+				</item>
+				<item>
+					<item>six</item>
+					<tag>$._value = 26;</tag>
+				</item>
+				<item>
+					<item>seven</item>
+					<tag>$._value = 27;</tag>
+				</item>
+				<item>
+					<item>eight</item>
+					<tag>$._value = 28;</tag>
+				</item>
+				<item>
+					<item>nine</item>
+					<tag>$._value = 29;</tag>
+				</item>
+			</one-of>
+		</item>
+	</rule>
+	<!-- $Cardinal_20_to_99._value: integer [20...99] -->
+	<rule id="Cardinal_20_to_99" scope="public">
+		<example>twenty one</example>
+		<example>fifty seven</example>
+		<example>ninety</example>
+		<one-of>
+			<item>
+				<item>twenty</item>
+				<tag>$._value = 20;</tag>
+			</item>
+			<item>
+				<item>thirty</item>
+				<tag>$._value = 30;</tag>
+			</item>
+			<item>
+				<item>forty</item>
+				<tag>$._value = 40;</tag>
+			</item>
+			<item>
+				<item>fifty</item>
+				<tag>$._value = 50;</tag>
+			</item>
+			<item>
+				<item>sixty</item>
+				<tag>$._value = 60;</tag>
+			</item>
+			<item>
+				<item>seventy</item>
+				<tag>$._value = 70;</tag>
+			</item>
+			<item>
+				<item>eighty</item>
+				<tag>$._value = 80;</tag>
+			</item>
+			<item>
+				<item>ninety</item>
+				<tag>$._value = 90;</tag>
+			</item>
+		</one-of>
+		<item repeat="0-1">
+			<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+			<tag>$._value = $._value + $$._value</tag>
+		</item>
+	</rule>
+	<!-- $Cardinal_100_to_999._value: integer [100...999] -->
+	<rule id="Cardinal_100_to_999" scope="public">
+		<example>one hundred fifty seven</example>
+		<example>eight hundred and thirty nine</example>
+		<example>nine hundred</example>
+		<tag>$._value = 1;</tag>
+		<item repeat="0-1">
+			<one-of>
+				<item>
+					<item>a</item>
+					<tag>$._value = 1;</tag>
+				</item>
+				<item>
+					<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+					<tag>$ = $$;</tag>
+				</item>
+			</one-of>
+		</item>
+		<item>hundred</item>
+		<tag>$._value = $._value * 100;</tag>
+		<item repeat="0-1">
+			<item repeat="0-1">and</item>
+			<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+			<tag>$._value = $._value + $$._value;</tag>
+		</item>
+	</rule>
+	<!-- $Cardinal_1000_to_999999._value: integer [1000...999999] -->
+	<rule id="Cardinal_1000_to_999999" scope="public">
+		<example>one hundred fifty seven thousand three hundred and twenty seven</example>
+		<example>eight hundred and thirty nine thousand</example>
+		<example>ten thousand and fifty</example>
+		<tag>$._value = 1;</tag>
+		<item repeat="0-1">
+			<one-of>
+				<item>
+					<item>a</item>
+					<tag>$._value = 1;</tag>
+				</item>
+				<item>
+					<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+					<tag>$ = $$;</tag>
+				</item>
+			</one-of>
+		</item>
+		<item>thousand</item>
+		<tag>$._value = $._value * 1000;</tag>
+		<item repeat="0-1">
+			<item repeat="0-1">and</item>
+			<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+			<tag>$._value = $._value + $$._value;</tag>
+		</item>
+	</rule>
+	<!--  Category: Ordinal-->
+	<!--  Description: Ordinal rules describe numeric ordering values in the range of 1 (first) to 100 (one hundredth).-->
+	<!--    The numeric range is encoded in the rule name. For example, Ordinal_1_to_9 will contain ordinals: first, second, third, ...,-->
+	<!--    ninth.-->
+	<!--    The <Ordinal> rule covers the full range.-->
+	<!--    All return an integer _value semantic item.-->
+	<!-- $Ordinal._value: integer [1...100] -->
+	<rule id="Ordinal" scope="public">
+		<example>first</example>
+		<example>thirteenth</example>
+		<example>fifty ninth</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Ordinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Ordinal_10_to_19" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Ordinal_20_to_99" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item repeat="0-1">one</item>
+				<item>hundredth</item>
+				<tag>$._value = 100;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Ordinal_1_to_9._value: integer [1...9] -->
+	<rule id="Ordinal_1_to_9" scope="public">
+		<example>first</example>
+		<example>ninth</example>
+		<one-of>
+			<item>
+				<item>first</item>
+				<tag>$._value = 1;</tag>
+			</item>
+			<item>
+				<item>second</item>
+				<tag>$._value = 2;</tag>
+			</item>
+			<item>
+				<item>third</item>
+				<tag>$._value = 3;</tag>
+			</item>
+			<item>
+				<item>fourth</item>
+				<tag>$._value = 4;</tag>
+			</item>
+			<item>
+				<item>fifth</item>
+				<tag>$._value = 5;</tag>
+			</item>
+			<item>
+				<item>sixth</item>
+				<tag>$._value = 6;</tag>
+			</item>
+			<item>
+				<item>seventh</item>
+				<tag>$._value = 7;</tag>
+			</item>
+			<item>
+				<item>eighth</item>
+				<tag>$._value = 8;</tag>
+			</item>
+			<item>
+				<item>ninth</item>
+				<tag>$._value = 9;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Ordinal_1_to_31._value: integer [1...31] -->
+	<rule id="Ordinal_1_to_31" scope="public">
+		<example>first</example>
+		<example>eleventh</example>
+		<example>twenty ninth</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Ordinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Ordinal_10_to_19" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Ordinal_20_to_29" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item>thirtieth</item>
+				<tag>$._value = 30;</tag>
+			</item>
+			<item>
+				<item>thirty first</item>
+				<tag>$._value = 31;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Ordinal_10_to_19._value: integer [10...19] -->
+	<rule id="Ordinal_10_to_19" scope="public">
+		<example>tenth</example>
+		<example>nineteenth</example>
+		<one-of>
+			<item>
+				<item>tenth</item>
+				<tag>$._value = 10;</tag>
+			</item>
+			<item>
+				<item>eleventh</item>
+				<tag>$._value = 11;</tag>
+			</item>
+			<item>
+				<item>twelfth</item>
+				<tag>$._value = 12;</tag>
+			</item>
+			<item>
+				<item>thirteenth</item>
+				<tag>$._value = 13;</tag>
+			</item>
+			<item>
+				<item>fourteenth</item>
+				<tag>$._value = 14;</tag>
+			</item>
+			<item>
+				<item>fifteenth</item>
+				<tag>$._value = 15;</tag>
+			</item>
+			<item>
+				<item>sixteenth</item>
+				<tag>$._value = 16;</tag>
+			</item>
+			<item>
+				<item>seventeenth</item>
+				<tag>$._value = 17;</tag>
+			</item>
+			<item>
+				<item>eighteenth</item>
+				<tag>$._value = 18;</tag>
+			</item>
+			<item>
+				<item>nineteenth</item>
+				<tag>$._value = 19;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Ordinal_20_to_29._value: integer [20...29] -->
+	<rule id="Ordinal_20_to_29" scope="public">
+		<example>twentieth</example>
+		<example>twenty ninth</example>
+		<one-of>
+			<item>
+				<item>twentieth</item>
+				<tag>$._value = 20;</tag>
+			</item>
+			<item>
+				<item>twenty</item>
+				<tag>$._value = 20;</tag>
+				<one-of>
+					<item>
+						<item>first</item>
+						<tag>$._value = 21;</tag>
+					</item>
+					<item>
+						<item>second</item>
+						<tag>$._value = 22;</tag>
+					</item>
+					<item>
+						<item>third</item>
+						<tag>$._value = 23;</tag>
+					</item>
+					<item>
+						<item>fourth</item>
+						<tag>$._value = 24;</tag>
+					</item>
+					<item>
+						<item>fifth</item>
+						<tag>$._value = 25;</tag>
+					</item>
+					<item>
+						<item>sixth</item>
+						<tag>$._value = 26;</tag>
+					</item>
+					<item>
+						<item>seventh</item>
+						<tag>$._value = 27;</tag>
+					</item>
+					<item>
+						<item>eighth</item>
+						<tag>$._value = 28;</tag>
+					</item>
+					<item>
+						<item>ninth</item>
+						<tag>$._value = 29;</tag>
+					</item>
+				</one-of>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Ordinal_20_to_99._value: integer [20...99] -->
+	<rule id="Ordinal_20_to_99" scope="public">
+		<example>twentieth</example>
+		<example>forty ninth</example>
+		<example>sixty seventh</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Ordinal_20_to_29" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item>thirtieth</item>
+				<tag>$._value = 30;</tag>
+			</item>
+			<item>
+				<item>fortieth</item>
+				<tag>$._value = 40;</tag>
+			</item>
+			<item>
+				<item>fiftieth</item>
+				<tag>$._value = 50;</tag>
+			</item>
+			<item>
+				<item>sixtieth</item>
+				<tag>$._value = 60;</tag>
+			</item>
+			<item>
+				<item>seventieth</item>
+				<tag>$._value = 70;</tag>
+			</item>
+			<item>
+				<item>eightieth</item>
+				<tag>$._value = 80;</tag>
+			</item>
+			<item>
+				<item>ninetieth</item>
+				<tag>$._value = 90;</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>
+						<item>thirty</item>
+						<tag>$._value = 30;</tag>
+					</item>
+					<item>
+						<item>forty</item>
+						<tag>$._value = 40;</tag>
+					</item>
+					<item>
+						<item>fifty</item>
+						<tag>$._value = 50;</tag>
+					</item>
+					<item>
+						<item>sixty</item>
+						<tag>$._value = 60;</tag>
+					</item>
+					<item>
+						<item>seventy</item>
+						<tag>$._value = 70;</tag>
+					</item>
+					<item>
+						<item>eighty</item>
+						<tag>$._value = 80;</tag>
+					</item>
+					<item>
+						<item>ninety</item>
+						<tag>$._value = 90;</tag>
+					</item>
+				</one-of>
+				<ruleref uri="#Ordinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!--  Category: Number-->
+	<!--  Description: Number rules describe numeric values on the range of - 1 million to 1 million including two decimal points. The numeric range is encoded in-->
+	<!--    the rule name. For example, Number_0_to_1000 will contain numbers on the range of 0...1000, like 5.65.-->
+	<!--    The <Number> rule covers the full range.-->
+	<!--    All return an float _value semantic item.-->
+	<!-- $Number._value: integer [-1,000,000.00 ... 1,000,000.00] -->
+	<rule id="Number" scope="public">
+		<example>one point one</example>
+		<example>minus nine thousand</example>
+		<example>plus four hundred and fifty six thousand three hundred and sixty two point seven two</example>
+		<tag>var plusminus = 1;</tag>
+		<item repeat="0-1">
+			<one-of>
+				<item>
+					<item>plus</item>
+					<tag>plusminus = 1;</tag>
+				</item>
+				<item>
+					<item>minus</item>
+					<tag>plusminus = -1;</tag>
+				</item>
+			</one-of>
+		</item>
+		<one-of>
+			<item>
+				<one-of>
+					<item>
+						<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+						<tag>$ = $$;</tag>
+					</item>
+					<item>
+						<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+						<tag>$ = $$;</tag>
+					</item>
+					<item>
+						<ruleref uri="#Cardinal_1000_to_999999" type="application/srgs+xml"/>
+						<tag>$ = $$;</tag>
+					</item>
+				</one-of>
+				<item repeat="0-1">
+					<item>point</item>
+					<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value / 10;</tag>
+					<item repeat="0-1">
+						<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+						<tag>$._value = $._value + $$._value / 100;</tag>
+					</item>
+				</item>
+			</item>
+			<item>
+				<item repeat="0-1">
+					<one-of>
+						<item>a</item>
+						<item>one</item>
+					</one-of>
+				</item>
+				<item>million</item>
+				<tag>$._value = 1000000;</tag>
+			</item>
+		</one-of>
+		<tag>$._value = $._value * plusminus;</tag>
+	</rule>
+	<!-- $Number_upto1000._value: integer [-1,000.00 ... 1,000.00] -->
+	<rule id="Number_upto1000" scope="public">
+		<example>one point one</example>
+		<example>minus nine hundred</example>
+		<example>plus four hundred and fifty two point seven two</example>
+		<tag>var plusminus = 1;</tag>
+		<item repeat="0-1">
+			<one-of>
+				<item>
+					<item>plus</item>
+					<tag>plusminus = 1;</tag>
+				</item>
+				<item>
+					<item>minus</item>
+					<tag>plusminus = -1;</tag>
+				</item>
+			</one-of>
+		</item>
+		<one-of>
+			<item>
+				<one-of>
+					<item>
+						<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+						<tag>$ = $$;</tag>
+					</item>
+					<item>
+						<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+						<tag>$ = $$;</tag>
+					</item>
+				</one-of>
+				<item repeat="0-1">
+					<item>point</item>
+					<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value / 10;</tag>
+					<item repeat="0-1">
+						<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+						<tag>$._value = $._value + $$._value / 100;</tag>
+					</item>
+				</item>
+			</item>
+			<item>
+				<item repeat="0-1">
+					<one-of>
+						<item>a</item>
+						<item>one</item>
+					</one-of>
+				</item>
+				<item>thousand</item>
+				<tag>$._value = 1000;</tag>
+			</item>
+		</one-of>
+		<tag>$._value = $._value * plusminus;</tag>
+	</rule>
+	<!--  Category: DigitBlock-->
+	<!--  Description: DigitBlock rules describe sequences of digit strings in length from 2 to 4. For example 20 is "two zero",-->
+	<!--    2354 is "two three five four" or "twenty three fifty four", etc.-->
+	<!--    The length of the DigitBlock is encoded in the rule name. For example, DigitBlock_2Digits provides for digit strings of-->
+	<!--    length 2. E.g. "two one", "eleven", "four seven", etc.-->
+	<!--    All return a string _value semantic item giving the digit string-->
+	<!-- $DigitBlock_2Digits._value: string [length 2] -->
+	<rule id="DigitBlock_2Digits" scope="public">
+		<example>zero zero</example>
+		<example>one nine</example>
+		<example>nineteen</example>
+		<tag>$._value = '';</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_10_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $DigitBlock_3Digits._value: string [length 3] -->
+	<rule id="DigitBlock_3Digits" scope="public">
+		<example>zero zero three</example>
+		<example>one two three</example>
+		<example>one twenty</example>
+		<example>two hundred</example>
+		<tag>$._value = '';</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#DigitBlock_2Digits" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<item>hundred</item>
+				<tag>$._value = $._value + '00';</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $DigitBlock_4Digits._value: string [length 4] -->
+	<rule id="DigitBlock_4Digits" scope="public">
+		<example>one two three four</example>
+		<example>twenty twenty four</example>
+		<example>twenty four twenty</example>
+		<example>thirteen oh four</example>
+		<example>oh four thirteen</example>
+		<example>four thousand</example>
+		<example>two three hundred</example>
+		<example>twenty three hundred</example>
+		<tag>$._value = '' ;</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_10_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#Cardinal_10_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_10_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#Cardinal_10_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>
+						<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+						<tag>$._value = $._value + $$._value;</tag>
+						<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+						<tag>$._value = $._value + $$._value;</tag>
+					</item>
+					<item>
+						<ruleref uri="#Cardinal_10_to_99" type="application/srgs+xml"/>
+						<tag>$._value = $._value + $$._value;</tag>
+					</item>
+				</one-of>
+				<item>hundred</item>
+				<tag>$._value = $._value + '00';</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<item>thousand</item>
+				<tag>$._value = $._value + '000';</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!--  Category: Date-->
+	<!--  Description: The Date rules provide for user input of dates in a number of forms. The particular form is encoded in the -->
+	<!--    rule name. For example:-->
+	<!--        Date_Month_Day_Year allows phrases of the form "March twenty second two thousand and five"-->
+	<!--        Date_Month_Day allows phrases of the form "March twenty second" - the year is assumed-->
+	<!--        Date_Day_Month allows phrases of the form "the twenty second of March" - the year is assumed-->
+	<!--        Date_MonthNum_DayNum allows numerical date phrases of the form "nine seventeen" - i.e. September 17; the year is assumed-->
+	<!--    When a quantity (year, month, day) in a Date is ambiguous, we provide an Alternate semantic item. The default semantic item-->
+	<!--    assumes future dates. Alternate semantic items will provide for past dates. For example: -->
+	<!--        If today is June 1, 2005 and the user says "May twenty fourth", our rules will return:-->
+	<!--        Day = 24-->
+	<!--        Month = 5-->
+	<!--        Year = 2006-->
+	<!--        AlternateYear = 2005-->
+	<!--    -->
+	<!--    Default date semantics are error checked for consistency (e.g. that February 29th only falls on leap years). Alternate date-->
+	<!--    semantics are not checked for consistency. The IsValidDate semantic item will be set to false if the default semantic date-->
+	<!--    is not valid.-->
+	<!--  -->
+	<!-- -->
+	<!--      $Date.IsValidDate: string ["true", "false"]-->
+	<!--      $Date.Month:-->
+	<!--        $Date.Month._value: integer [1...12]-->
+	<!--        $Date.Month._attributes.name: string ["Assumed", "Derived", "Explicit"]-->
+	<!--      $Date.Day:-->
+	<!--        $Date.Day._value: integer [1...31]-->
+	<!--        $Date.Day._attributes.name: string ["Assumed", "Derived", "Explicit"]-->
+	<!--      $Date.Year: -->
+	<!--        $Date.Year._value: integer [1900...2099]-->
+	<!--        $Date.Year._attributes.name: string ["Assumed", "Derived", "Explicit"]-->
+	<!--        $Date.Year._attributes.form: string ["ShortForm", "LongForm", "Relative"] Only specified if _name == "Explicit" or "Derived"-->
+	<!--      $Date.AlternateMonth (Optional):-->
+	<!--        $Date.AlternateMonth._value: integer [1...12]-->
+	<!--      $Date.AlternateDay (Optional):-->
+	<!--        $Date.AlternateDay._value: integer [1...31]-->
+	<!--      $Date.AlternateYear (Optional):-->
+	<!--        $Date.AlternateYear._value: integer [1900...2099]-->
+	<!--      -->
+	<rule id="Date" scope="public">
+		<example>July the first</example>
+		<example>Monday</example>
+		<example>tomorrow</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Date_Day" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Date_Month_Day" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Date_Month_Day_Year" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Date_Day_Month" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Date_Day_Month_Year" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Date_MonthNum_DayNum" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Date_MonthNum_DayNum_Year" type="application/srgs+xml"/>
+			</item>
+			<item>
+				<ruleref uri="#Date_Relative" type="application/srgs+xml"/>
+			</item>
+		</one-of>
+		<tag>$ = $$;</tag>
+	</rule>
+	<!-- -->
+	<!--      $Date_Day.IsValidDate: string ["true", "false"]-->
+	<!--      $Date_Day.Month:-->
+	<!--        $Date_Day.Month._value: integer [1...12]-->
+	<!--        $Date_Day.Month._attributes.name: string ["Assumed"]-->
+	<!--      $Date_Day.Day:-->
+	<!--        $Date_Day.Day._value: integer [1...31]-->
+	<!--        $Date_Day.Day._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Day.Year: -->
+	<!--        $Date_Day.Year._value: integer [1900...2099]-->
+	<!--        $Date_Day.Year._attributes.name: string ["Assumed"]-->
+	<!--      $Date_Day.AlternateMonth:-->
+	<!--        $Date_Day.AlternateMonth._value: integer [1...12]-->
+	<!--      $Date_Day.AlternateYear:-->
+	<!--        $Date_Day.AlternateYear._value: integer [1900...2099]-->
+	<!--      -->
+	<rule id="Date_Day" scope="public">
+		<example>on the first</example>
+		<example>the twenty second</example>
+		<tag>function FutureMonth(day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      
+      thisMonth = (day &lt; thisDate.getDate()) ? thisMonth + 1 : thisMonth;
+      thisMonth = (thisMonth &lt; 13) ? thisMonth : 1;
+      
+      return thisMonth;
+  }</tag>
+		<tag>function PastMonth(day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      
+      thisMonth = (day &gt; thisDate.getDate()) ? thisMonth - 1 : thisMonth;
+      thisMonth = (thisMonth &gt; 1) ? thisMonth : 12;
+      
+      return thisMonth;
+  }</tag>
+		<tag>function FutureYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &gt; thisMonth) || (month == thisMonth &amp;&amp; day &gt;= thisDay)) ? thisYear : thisYear + 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function PastYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &lt; thisMonth) || (month == thisMonth &amp;&amp; day &lt;= thisDay)) ? thisYear : thisYear - 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function IsValidDate(month, day, year) {
+      var oDate = new Date();
+      var retVal = "true";
+      
+      if ((year &lt; 1900) || (year &gt; 2099))
+      {
+        retVal = "false";
+      }
+      
+      oDate.setFullYear(year); 
+      oDate.setDate(1);
+      oDate.setMonth(month - 1);
+      oDate.setDate(day);
+      
+      if (day != oDate.getDate())
+        retVal = "false";
+        
+      return retVal;
+  }</tag>
+		<tag>$.Day = []; $.Month = []; $.Year = []; $.AlternateMonth = []; $.AlternateYear = [];</tag>
+		<item repeat="0-1">
+			<item repeat="0-1">on</item>
+			<item>the</item>
+		</item>
+		<ruleref uri="#Ordinal_1_to_31" type="application/srgs+xml"/>
+		<tag>$.Day._value = $$._value;
+      $.Day._attributes.name = "Explicit";
+      $.Month._value = FutureMonth($.Day._value);
+      $.Month._attributes.name = "Assumed";
+      $.Year._value = FutureYear($.Month._value, $.Day._value);
+      $.Year._attributes.name = "Assumed";
+      $.AlternateMonth._value = PastMonth($.Day._value);
+      $.AlternateYear._value = PastYear($.AlternateMonth._value, $.Day._value);
+      $.IsValidDate = IsValidDate($.Month._value, $.Day._value, $.Year._value);</tag>
+	</rule>
+	<!-- -->
+	<!--      $Date_Month_Day.IsValidDate: string ["true", "false"]-->
+	<!--      $Date_Month_Day.Month:-->
+	<!--        $Date_Month_Day.Month._value: integer [1...12]-->
+	<!--        $Date_Month_Day.Month._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Month_Day.Day:-->
+	<!--        $Date_Month_Day.Day._value: integer [1...31]-->
+	<!--        $Date_Month_Day.Day._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Month_Day.Year: -->
+	<!--        $Date_Month_Day.$Year._value: integer [1900...2099]-->
+	<!--        $Date_Month_Day.$Year._attributes.name: string ["Assumed"]-->
+	<!--      $Date_Month_Day.AlternateYear:-->
+	<!--        $Date_Month_Day.AlternateYear._value: integer [1900...2099]-->
+	<!--      -->
+	<rule id="Date_Month_Day" scope="public">
+		<example>May the twenty first</example>
+		<example>Tuesday March second</example>
+		<example>June ninth</example>
+		<tag>function FutureYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &gt; thisMonth) || (month == thisMonth &amp;&amp; day &gt;= thisDay)) ? thisYear : thisYear + 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function PastYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &lt; thisMonth) || (month == thisMonth &amp;&amp; day &lt;= thisDay)) ? thisYear : thisYear - 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function IsValidDate(month, day, year) {
+      var oDate = new Date();
+      var retVal = "true";
+      
+      if ((year &lt; 1900) || (year &gt; 2099))
+      {
+        retVal = "false";
+      }
+      
+      oDate.setFullYear(year); 
+      oDate.setDate(1);
+      oDate.setMonth(month - 1);
+      oDate.setDate(day);
+      
+      if (day != oDate.getDate())
+        retVal = "false";
+        
+      return retVal;
+  }</tag>
+		<tag>$.Day = []; $.Month = []; $.Year = []; $.AlternateYear = [];</tag>
+		<item repeat="0-1">
+			<ruleref uri="#Date_Weekday" type="application/srgs+xml"/>
+		</item>
+		<ruleref uri="#Date_Month" type="application/srgs+xml"/>
+		<tag>$.Month._value = $$._value;</tag>
+		<item repeat="0-1">the</item>
+		<ruleref uri="#Ordinal_1_to_31" type="application/srgs+xml"/>
+		<tag>$.Day._value = $$._value;
+      $.Day._attributes.name = "Explicit";
+      $.Month._attributes.name = "Explicit";
+      $.Year._value = FutureYear($.Month._value, $.Day._value);
+      $.Year._attributes.name = "Assumed";
+      $.AlternateYear._value = PastYear($.Month._value, $.Day._value);
+      $.IsValidDate = IsValidDate($.Month._value, $.Day._value, $.Year._value);</tag>
+	</rule>
+	<!-- -->
+	<!--      $Date_Month_Day_Year.IsValidDate: string ["true", "false"]-->
+	<!--      $Date_Month_Day_Year.Month:-->
+	<!--        $Date_Month_Day_Year.Month._value: integer [1...12]-->
+	<!--        $Date_Month_Day_Year.Month._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Month_Day_Year.Day:-->
+	<!--        $Date_Month_Day_Year.Day._value: integer [1...31]-->
+	<!--        $Date_Month_Day_Year.Day._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Month_Day_Year.Year: -->
+	<!--        $Date_Month_Day_Year.Year._value: integer [1900...2099]-->
+	<!--        $Date_Month_Day_Year.Year._attributes.name: string ["Assumed"]-->
+	<!--        $Date_Month_Day_Year.Year._attributes.form: string ["ShortForm", "LongForm", "Relative"]-->
+	<!--      -->
+	<rule id="Date_Month_Day_Year" scope="public">
+		<example>May the twenty first two thousand and five</example>
+		<example>Tuesday March second ninety seven</example>
+		<example>June ninth nineteen sixty five</example>
+		<tag>function IsValidDate(month, day, year) {
+      var oDate = new Date();
+      var retVal = "true";
+      
+      if ((year &lt; 1900) || (year &gt; 2099))
+      {
+        retVal = "false";
+      }
+      
+      oDate.setFullYear(year); 
+      oDate.setDate(1);
+      oDate.setMonth(month - 1);
+      oDate.setDate(day);
+      
+      if (day != oDate.getDate())
+        retVal = "false";
+        
+      return retVal;
+  }</tag>
+		<tag>$.Day = []; $.Month = []; $.Year = [];</tag>
+		<ruleref uri="#Date_Month_Day" type="application/srgs+xml"/>
+		<tag>$.Month = $$.Month;
+      $.Day = $$.Day;</tag>
+		<ruleref uri="#Date_Year" type="application/srgs+xml"/>
+		<tag>$.Year = $$; 
+      $.Year._attributes.name = "Explicit";
+      $.IsValidDate = IsValidDate($.Month._value, $.Day._value, $.Year._value);</tag>
+	</rule>
+	<!-- -->
+	<!--      $Date_Day_Month.IsValidDate: string ["true", "false"]-->
+	<!--      $Date_Day_Month.Month:-->
+	<!--        $Date_Day_Month.Month._value: integer [1...12]-->
+	<!--        $Date_Day_Month.Month._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Day_Month.Day:-->
+	<!--        $Date_Day_Month.Day._value: integer [1...31]-->
+	<!--        $Date_Day_Month.Day._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Day_Month.Year: -->
+	<!--        $Date_Day_Month.Year._value: integer [1900...2099]-->
+	<!--        $Date_Day_Month.Year._attributes.name: string ["Assumed"]-->
+	<!--      $Date_Day_Month.AlternateYear:-->
+	<!--        $Date_Day_Month.AlternateYear._value: integer [1900...2099]-->
+	<!--      -->
+	<rule id="Date_Day_Month" scope="public">
+		<example>the twenty first of May</example>
+		<example>Tuesday the second of March</example>
+		<example>the ninth of June</example>
+		<tag>function FutureYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &gt; thisMonth) || (month == thisMonth &amp;&amp; day &gt;= thisDay)) ? thisYear : thisYear + 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function PastYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &lt; thisMonth) || (month == thisMonth &amp;&amp; day &lt;= thisDay)) ? thisYear : thisYear - 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function IsValidDate(month, day, year) {
+      var oDate = new Date();
+      var retVal = "true";
+      
+      if ((year &lt; 1900) || (year &gt; 2099))
+      {
+        retVal = "false";
+      }
+      
+      oDate.setFullYear(year); 
+      oDate.setDate(1);
+      oDate.setMonth(month - 1);
+      oDate.setDate(day);
+      
+      if (day != oDate.getDate())
+        retVal = "false";
+        
+      return retVal;
+  }</tag>
+		<tag>$.Day = []; $.Month = []; $.Year = []; $.AlternateYear = [];</tag>
+		<item repeat="0-1">
+			<ruleref uri="#Date_Weekday" type="application/srgs+xml"/>
+		</item>
+		<item repeat="0-1">the</item>
+		<ruleref uri="#Ordinal_1_to_31" type="application/srgs+xml"/>
+		<tag>$.Day._value = $$._value;</tag>
+		<item>of</item>
+		<ruleref uri="#Date_Month" type="application/srgs+xml"/>
+		<tag>$.Month._value = $$._value; 
+      $.Day._attributes.name = "Explicit";
+      $.Month._attributes.name = "Explicit";
+      $.Year._value = FutureYear($.Month._value, $.Day._value);
+      $.Year._attributes.name = "Assumed";
+      $.AlternateYear._value = PastYear($.Month._value, $.Day._value);
+      $.IsValidDate = IsValidDate($.Month._value, $.Day._value, $.Year._value);</tag>
+	</rule>
+	<!-- -->
+	<!--      $Date_Day_Month_Year.IsValidDate: string ["true", "false"]-->
+	<!--      $Date_Day_Month_Year.Month:-->
+	<!--        $Date_Day_Month_Year.Month._value: integer [1...12]-->
+	<!--        $Date_Day_Month_Year.Month._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Day_Month_Year.Day:-->
+	<!--        $Date_Day_Month_Year.Day._value: integer [1...31]-->
+	<!--        $Date_Day_Month_Year.Day._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Day_Month_Year.Year: -->
+	<!--        $Date_Day_Month_Year.Year._value: integer [1900...2099]-->
+	<!--        $Date_Day_Month_Year.Year._attributes.name: string ["Derived", "Explicit"]-->
+	<!--        $Date_Day_Month_Year.Year._attributes.form: string ["ShortForm", "LongForm", "Relative"]-->
+	<!--      -->
+	<rule id="Date_Day_Month_Year" scope="public">
+		<example>the twenty first of May two thousand and five</example>
+		<example>Tuesday the second of March ninety seven</example>
+		<example>the ninth of June nineteen sixty two</example>
+		<tag>function IsValidDate(month, day, year) {
+      var oDate = new Date();
+      var retVal = "true";
+      
+      if ((year &lt; 1900) || (year &gt; 2099))
+      {
+        retVal = "false";
+      }
+      
+      oDate.setFullYear(year); 
+      oDate.setDate(1);
+      oDate.setMonth(month - 1);
+      oDate.setDate(day);
+      
+      if (day != oDate.getDate())
+        retVal = "false";
+        
+      return retVal;
+  }</tag>
+		<tag>$.Day = []; $.Month = []; $.Year = [];</tag>
+		<item repeat="0-1">
+			<ruleref uri="#Date_Weekday" type="application/srgs+xml"/>
+		</item>
+		<ruleref uri="#Date_Day_Month" type="application/srgs+xml"/>
+		<tag>$.Month = $$.Month;
+      $.Day = $$.Day;</tag>
+		<ruleref uri="#Date_Year" type="application/srgs+xml"/>
+		<tag>$.Year = $$;
+      $.IsValidDate = IsValidDate($.Month._value, $.Day._value, $.Year._value);</tag>
+	</rule>
+	<!-- -->
+	<!--      $Date_MonthNum_DayNum.IsValidDate: string ["true", "false"]-->
+	<!--      $Date_MonthNum_DayNum.Month:-->
+	<!--        $Date_MonthNum_DayNum.Month._value: integer [1...12]-->
+	<!--        $Date_MonthNum_DayNum.Month._attributes.name: string ["Explicit"]-->
+	<!--      $Date_MonthNum_DayNum.Day:-->
+	<!--        $Date_MonthNum_DayNum.Day._value: integer [1...31]-->
+	<!--        $Date_MonthNum_DayNum.Day._attributes.name: string ["Explicit"]-->
+	<!--      $Date_MonthNum_DayNum.Year: -->
+	<!--        $Date_MonthNum_DayNum.Year._value: integer [1900...2099]-->
+	<!--        $Date_MonthNum_DayNum.Year._attributes.name: string ["Assumed"]-->
+	<!--      $Date_MonthNum_DayNum.AlternateYear:-->
+	<!--        $Date_MonthNum_DayNum.AlternateYear._value: integer [1900...2099]-->
+	<!--      -->
+	<rule id="Date_MonthNum_DayNum" scope="public">
+		<example>five twenty one</example>
+		<example>three two</example>
+		<example>six nine</example>
+		<tag>function FutureYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &gt; thisMonth) || (month == thisMonth &amp;&amp; day &gt;= thisDay)) ? thisYear : thisYear + 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function PastYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &lt; thisMonth) || (month == thisMonth &amp;&amp; day &lt;= thisDay)) ? thisYear : thisYear - 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function IsValidDate(month, day, year) {
+      var oDate = new Date();
+      var retVal = "true";
+      
+      if ((year &lt; 1900) || (year &gt; 2099))
+      {
+        retVal = "false";
+      }
+      
+      oDate.setFullYear(year); 
+      oDate.setDate(1);
+      oDate.setMonth(month - 1);
+      oDate.setDate(day);
+      
+      if (day != oDate.getDate())
+        retVal = "false";
+        
+      return retVal;
+  }</tag>
+		<tag>$.Day = []; $.Month = []; $.Year = []; $.AlternateYear = [];</tag>
+		<ruleref uri="#Date_MonthNum" type="application/srgs+xml"/>
+		<tag>$.Month._value = $$._value;</tag>
+		<ruleref uri="#Date_DayNum" type="application/srgs+xml"/>
+		<tag>$.Day._value = $$._value;
+      $.Day._attributes.name = "Explicit";
+      $.Month._attributes.name = "Explicit";
+      $.Year._value = FutureYear($.Month._value, $.Day._value);
+      $.Year._attributes.name = "Assumed";
+      $.AlternateYear._value = PastYear($.Month._value, $.Day._value);
+      $.IsValidDate = IsValidDate($.Month._value, $.Day._value, $.Year._value);</tag>
+	</rule>
+	<!-- -->
+	<!--      $Date_MonthNum_DayNum_Year.IsValidDate: string ["true", "false"]-->
+	<!--      $Date_MonthNum_DayNum_Year.Month:-->
+	<!--        $Date_MonthNum_DayNum_Year.Month._value: integer [1...12]-->
+	<!--        $Date_MonthNum_DayNum_Year.Month._attributes.name: string ["Explicit"]-->
+	<!--      $Date_MonthNum_DayNum_Year.Day:-->
+	<!--        $Date_MonthNum_DayNum_Year.Day._value: integer [1...31]-->
+	<!--        $Date_MonthNum_DayNum_Year.Day._attributes.name: string ["Explicit"]-->
+	<!--      $Date_MonthNum_DayNum_Year.Year: -->
+	<!--        $Date_MonthNum_DayNum_Year.Year._value: integer [1900...2099]-->
+	<!--        $Date_MonthNum_DayNum_Year.Year._attributes.name: string ["Assumed"]-->
+	<rule id="Date_MonthNum_DayNum_Year" scope="public">
+		<example>five twenty one two thousand six</example>
+		<example>three two nineteen ninety seven</example>
+		<example>six nine two thousand five</example>
+		<tag>function FutureYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &gt; thisMonth) || (month == thisMonth &amp;&amp; day &gt;= thisDay)) ? thisYear : thisYear + 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function PastYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &lt; thisMonth) || (month == thisMonth &amp;&amp; day &lt;= thisDay)) ? thisYear : thisYear - 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function IsValidDate(month, day, year) {
+      var oDate = new Date();
+      var retVal = "true";
+      
+      if ((year &lt; 1900) || (year &gt; 2099))
+      {
+        retVal = "false";
+      }
+      
+      oDate.setFullYear(year); 
+      oDate.setDate(1);
+      oDate.setMonth(month - 1);
+      oDate.setDate(day);
+      
+      if (day != oDate.getDate())
+        retVal = "false";
+        
+      return retVal;
+  }</tag>
+		<tag>$.Day = []; $.Month = []; $.Year = [];</tag>
+		<ruleref uri="#Date_MonthNum_DayNum" type="application/srgs+xml"/>
+		<tag>$.Month = $$.Month;
+      $.Day = $$.Day;</tag>
+		<ruleref uri="#Date_Year" type="application/srgs+xml"/>
+		<tag>$.Year = $$;
+      $.IsValidDate = IsValidDate($.Month._value, $.Day._value, $.Year._value);</tag>
+	</rule>
+	<!-- -->
+	<!--  $Date_Relative.Day.IsValidDate: string ["true", "false"]-->
+	<!--  $Date_Relative.Month:-->
+	<!--  $Date_Relative.Month._value: integer [1...12]-->
+	<!--  $Date_Relative.Month._attributes.name: string ["Assumed", "Derived"]-->
+	<!--  $Date_Relative.Day:-->
+	<!--  $Date_Relative.Day._value: integer [1...31]-->
+	<!--  $Date_Relative.Day._attributes.name: string ["Assumed", "Derived"]-->
+	<!--  $Date_Relative.Year:-->
+	<!--  $Date_Relative.Year._value: integer [1900...2099]-->
+	<!--  $Date_Relative.Year._attributes.name: string ["Derived"]-->
+	<!--  $Date_Relative.AlternateMonth (Optional):-->
+	<!--  $Date_Relative.AlternateMonth._value: integer [1...12]-->
+	<!--  $Date_Relative.AlternateDay (Optional):-->
+	<!--  $Date_Relative.AlternateDay._value: integer [1...31]-->
+	<!--  $Date_Relative.AlternateYear (Optional):-->
+	<!--  $Date_Relative.AlternateYear._value: integer [1900...2099]-->
+	<!--  -->
+	<rule id="Date_Relative" scope="public">
+		<example>yesterday</example>
+		<example>today</example>
+		<example>tomorrow</example>
+		<example>next Tuesday</example>
+		<example>Tuesday</example>
+		<example>last Tuesday</example>
+		<tag>$.Day = []; $.Month = []; $.Year = [];</tag>
+		<tag>function FutureMonth(day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      
+      thisMonth = (day &lt; thisDate.getDate()) ? thisMonth + 1 : thisMonth;
+      thisMonth = (thisMonth &lt; 13) ? thisMonth : 1;
+      
+      return thisMonth;
+  }</tag>
+		<tag>function PastMonth(day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      
+      thisMonth = (day &gt; thisDate.getDate()) ? thisMonth - 1 : thisMonth;
+      thisMonth = (thisMonth &gt; 1) ? thisMonth : 12;
+      
+      return thisMonth;
+  }</tag>
+		<tag>function FutureYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &gt; thisMonth) || (month == thisMonth &amp;&amp; day &gt;= thisDay)) ? thisYear : thisYear + 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function PastYear(month, day) {
+      var thisDate = new Date();
+      var thisMonth = thisDate.getMonth() + 1;
+      var thisDay = thisDate.getDay() + 1;
+      var thisYear = thisDate.getFullYear();
+      
+      thisYear = ((month &lt; thisMonth) || (month == thisMonth &amp;&amp; day &lt;= thisDay)) ? thisYear : thisYear - 1;
+      
+      return thisYear;
+  }</tag>
+		<tag>function IsValidDate(month, day, year) {
+      var oDate = new Date();
+      var retVal = "true";
+      
+      if ((year &lt; 1900) || (year &gt; 2099))
+      {
+        retVal = "false";
+      }
+      
+      oDate.setFullYear(year); 
+      oDate.setDate(1);
+      oDate.setMonth(month - 1);
+      oDate.setDate(day);
+      
+      if (day != oDate.getDate())
+        retVal = "false";
+        
+      return retVal;
+  }</tag>
+		<tag>function GetDateFromOffset(offset) {
+      var thisDate = new Date();
+      var newDate = new Date(thisDate.valueOf() + (offset * 60 * 60 * 24 * 1000) );
+      return newDate;
+  }</tag>
+		<tag>function GetOffsetFromWeekday(weekday, weekOffset) {
+		var oToday=new Date();
+		var todayOfWeek = oToday.getDay() + 1;
+		if (weekOffset=="next") {
+			if (weekday &gt;= todayOfWeek) { 
+        return (weekday - todayOfWeek); 
+      }
+			else { 
+        return 7 - (todayOfWeek - weekday); 
+      }
+		} 
+    else if (weekOffset=="previous") {
+			if (weekday &lt; todayOfWeek) { 
+        return (weekday - todayOfWeek); 
+      }
+			else { 
+        return ((weekday - todayOfWeek) - 7); 
+      }
+		} 
+    else return 0;
+	}</tag>
+		<tag>var oDate;
+      $.Day._attributes.name = "Derived";
+      $.Month._attributes.name = "Derived";
+      $.Year._attributes.name = "Derived";</tag>
+		<one-of>
+			<item>
+				<item>today</item>
+				<tag>oDate = GetDateFromOffset(0);</tag>
+			</item>
+			<item>
+				<item>tomorrow</item>
+				<tag>oDate = GetDateFromOffset(1);</tag>
+			</item>
+			<item>
+				<item>yesterday</item>
+				<tag>oDate = GetDateFromOffset(-1);</tag>
+			</item>
+			<item>
+				<item>next</item>
+				<ruleref uri="#Date_Weekday" type="application/srgs+xml"/>
+				<tag>var weekdayOffset = GetOffsetFromWeekday($$._value, "next");
+          oDate = GetDateFromOffset(weekdayOffset);
+
+          var altWeekdayOffset = weekdayOffset + 7;
+          var altDate = GetDateFromOffset(altWeekdayOffset);
+          $.AlternateMonth = []; $.AlternateYear = []; $.AlternateDay = [];
+          $.AlternateYear._value = altDate.getFullYear();
+          $.AlternateMonth._value = altDate.getMonth() + 1;
+          $.AlternateDay._value = altDate.getDate();</tag>
+			</item>
+			<item>
+				<ruleref uri="#Date_Weekday" type="application/srgs+xml"/>
+				<tag>var weekdayOffset = GetOffsetFromWeekday($$._value, "next");
+          oDate = GetDateFromOffset(weekdayOffset);
+
+          var altWeekdayOffset = GetOffsetFromWeekday($$._value, "previous");
+          var altDate = GetDateFromOffset(altWeekdayOffset);
+          $.AlternateMonth = []; $.AlternateYear = []; $.AlternateDay = [];
+          $.AlternateYear._value = altDate.getFullYear();
+          $.AlternateMonth._value = altDate.getMonth() + 1;
+          $.AlternateDay._value = altDate.getDate();</tag>
+			</item>
+			<item>
+				<item>last</item>
+				<ruleref uri="#Date_Weekday" type="application/srgs+xml"/>
+				<tag>var weekdayOffset = GetOffsetFromWeekday($$._value, "previous");
+          oDate = GetDateFromOffset(weekdayOffset);
+
+          var altWeekdayOffset = weekdayOffset - 7;
+          var altDate = GetDateFromOffset(altWeekdayOffset);
+          $.AlternateMonth = []; $.AlternateYear = []; $.AlternateDay = [];
+          $.AlternateYear._value = altDate.getFullYear();
+          $.AlternateMonth._value = altDate.getMonth() + 1;
+          $.AlternateDay._value = altDate.getDate();</tag>
+			</item>
+		</one-of>
+		<tag>$.Year._value = oDate.getFullYear();
+      $.Month._value = oDate.getMonth() + 1;
+      $.Day._value = oDate.getDate();
+      $.IsValidDate = IsValidDate($.Month._value, $.Day._value, $.Year._value);</tag>
+	</rule>
+	<!-- -->
+	<!--      $Date_MonthNum_Year.IsValidDate: string ["true", "false"]-->
+	<!--      $Date_MonthNum_Year.Month:-->
+	<!--        $Date_MonthNum_Year.Month._value: integer [1...12]-->
+	<!--        $Date_MonthNum_Year.Month._attributes.name: string ["Explicit"]-->
+	<!--      $Date_MonthNum_Year.Year: -->
+	<!--        $Date_MonthNum_Year.Year._value: integer [1900...2099]-->
+	<!--        $Date_MonthNum_Year.Year._attributes.name: string ["Derived", "Explicit"]-->
+	<!--        $Date_MonthNum_Year.Year._attributes.form: string ["ShortForm", "LongForm", "Relative"]-->
+	<!--  -->
+	<rule id="Date_MonthNum_Year" scope="public">
+		<example>five twenty one</example>
+		<example>three two thousand and five</example>
+		<example>six nineteen ninety seven</example>
+		<tag>$.Month = []; $.Year = [];</tag>
+		<ruleref uri="#Date_MonthNum" type="application/srgs+xml"/>
+		<tag>$.Month._value = $$._value;
+      $.Month._attributes.name = "Explicit";</tag>
+		<ruleref uri="#Date_Year" type="application/srgs+xml"/>
+		<tag>$.Year = $$;</tag>
+	</rule>
+	<!-- -->
+	<!--      $Date_Month_Year.IsValidDate: string ["true", "false"]-->
+	<!--      $Date_Month_Year.Month:-->
+	<!--        $Date_Month_Year.Month._value: integer [1...12]-->
+	<!--        $Date_Month_Year.Month._attributes.name: string ["Explicit"]-->
+	<!--      $Date_Month_Year.Year: -->
+	<!--        $Date_Month_Year.Year._value: integer [1900...2099]-->
+	<!--        $Date_Month_Year.Year._attributes.name: string ["Derived", "Explicit"]-->
+	<!--        $Date_Month_Year.Year._attributes.form: string ["ShortForm", "LongForm", "Relative"]-->
+	<!--  -->
+	<rule id="Date_Month_Year" scope="public">
+		<example>May twenty one</example>
+		<example>March two thousand and five</example>
+		<example>June nineteen ninety seven</example>
+		<tag>$.Month = []; $.Year = [];</tag>
+		<ruleref uri="#Date_Month" type="application/srgs+xml"/>
+		<tag>$.Month._value = $$._value;
+      $.Month._attributes.name = "Explicit";</tag>
+		<ruleref uri="#Date_Year" type="application/srgs+xml"/>
+		<tag>$.Year = $$;</tag>
+	</rule>
+	<!-- -->
+	<!--    $Date_Weekday._value : integer [1...7] Sunday=1, Monday=2, ..., Saturday=7-->
+	<!--  -->
+	<rule id="Date_Weekday" scope="public">
+		<example>Sunday</example>
+		<example>Friday</example>
+		<one-of>
+			<item>
+				<item>Sunday</item>
+				<tag>$._value = 1;</tag>
+			</item>
+			<item>
+				<item>Monday</item>
+				<tag>$._value = 2;</tag>
+			</item>
+			<item>
+				<item>Tuesday</item>
+				<tag>$._value = 3;</tag>
+			</item>
+			<item>
+				<item>Wednesday</item>
+				<tag>$._value = 4;</tag>
+			</item>
+			<item>
+				<item>Thursday</item>
+				<tag>$._value = 5;</tag>
+			</item>
+			<item>
+				<item>Friday</item>
+				<tag>$._value = 6;</tag>
+			</item>
+			<item>
+				<item>Saturday</item>
+				<tag>$._value = 7;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Date_Month._value : integer [1...12] -->
+	<rule id="Date_Month" scope="public">
+		<example>February</example>
+		<example>April</example>
+		<example>December</example>
+		<one-of>
+			<item>
+				<item>January</item>
+				<tag>$._value = 1;</tag>
+			</item>
+			<item>
+				<item>February</item>
+				<tag>$._value = 2;</tag>
+			</item>
+			<item>
+				<item>March</item>
+				<tag>$._value = 3;</tag>
+			</item>
+			<item>
+				<item>April</item>
+				<tag>$._value = 4;</tag>
+			</item>
+			<item>
+				<item>May</item>
+				<tag>$._value = 5;</tag>
+			</item>
+			<item>
+				<item>June</item>
+				<tag>$._value = 6;</tag>
+			</item>
+			<item>
+				<item>July</item>
+				<tag>$._value = 7;</tag>
+			</item>
+			<item>
+				<item>August</item>
+				<tag>$._value = 8;</tag>
+			</item>
+			<item>
+				<item>September</item>
+				<tag>$._value = 9;</tag>
+			</item>
+			<item>
+				<item>October</item>
+				<tag>$._value = 10;</tag>
+			</item>
+			<item>
+				<item>November</item>
+				<tag>$._value = 11;</tag>
+			</item>
+			<item>
+				<item>December</item>
+				<tag>$._value = 12;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Date_MonthNum._value : integer [1...12]-->
+	<rule id="Date_MonthNum" scope="public">
+		<example>oh four</example>
+		<example>six</example>
+		<one-of>
+			<item>
+				<item repeat="0-1">
+					<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+					<tag>$._value = 0;</tag>
+				</item>
+				<one-of>
+					<item>
+						<item>one</item>
+						<tag>$._value = 1;</tag>
+					</item>
+					<item>
+						<item>two</item>
+						<tag>$._value = 2;</tag>
+					</item>
+					<item>
+						<item>three</item>
+						<tag>$._value = 3;</tag>
+					</item>
+					<item>
+						<item>four</item>
+						<tag>$._value = 4;</tag>
+					</item>
+					<item>
+						<item>five</item>
+						<tag>$._value = 5;</tag>
+					</item>
+					<item>
+						<item>six</item>
+						<tag>$._value = 6;</tag>
+					</item>
+					<item>
+						<item>seven</item>
+						<tag>$._value = 7;</tag>
+					</item>
+					<item>
+						<item>eight</item>
+						<tag>$._value = 8;</tag>
+					</item>
+					<item>
+						<item>nine</item>
+						<tag>$._value = 9;</tag>
+					</item>
+				</one-of>
+			</item>
+			<item>
+				<item>ten</item>
+				<tag>$._value = 10;</tag>
+			</item>
+			<item>
+				<item>eleven</item>
+				<tag>$._value = 11;</tag>
+			</item>
+			<item>
+				<item>twelve</item>
+				<tag>$._value = 12;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Date_DayNum._value : integer [1...31] -->
+	<rule id="Date_DayNum" scope="public">
+		<example>one</example>
+		<example>eleven</example>
+		<example>twenty nine</example>
+		<one-of>
+			<item>
+				<item repeat="0-1">
+					<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				</item>
+				<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_10_to_19" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_20_to_29" type="application/srgs+xml"/>
+				<tag>$ = $$;</tag>
+			</item>
+			<item>
+				<item>thirty</item>
+				<tag>$._value = 30;</tag>
+			</item>
+			<item>
+				<item>thirty one</item>
+				<tag>$._value = 31;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- -->
+	<!--  Date_Year: Supports years between 1900 and 2099. If the caller just specifies the last two digits-->
+	<!--  then the behavior is as follows: 30 < NN: 20NN; 30 >= NN: 19NN-->
+	<!--  -->
+	<!--  $Date_Year._value: integer [1900...2099]-->
+	<!--  $Date_Year._attributes.name: string ["Derived", "Explicit"]-->
+	<!--  $Date_Year._attributes.form: string ["Long Form", "Short Form", "Relative"]-->
+	<!-- -->
+	<rule id="Date_Year" scope="public">
+		<example>nineteen hundred and five</example>
+		<example>ninety nine</example>
+		<example>oh one</example>
+		<example>two thousand and five</example>
+		<example>two thousand and eleven</example>
+		<example>next year</example>
+		<tag>$._value = (new Date()).getFullYear();
+      $._attributes.name = "Explicit";
+      $._attributes.form = "Long Form";</tag>
+		<one-of>
+			<item>
+				<item>nineteen hundred</item>
+				<tag>$._value = 1900;</tag>
+				<item repeat="0-1">
+					<item repeat="0-1">and</item>
+					<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value;</tag>
+				</item>
+			</item>
+			<item>
+				<item>nineteen</item>
+				<tag>$._value = 1900;</tag>
+				<one-of>
+					<item>
+						<ruleref uri="#Cardinal_10_to_99" type="application/srgs+xml"/>
+					</item>
+					<item>
+						<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+						<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+					</item>
+				</one-of>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<item>one nine</item>
+				<tag>$._value = 1900;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value * 10;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<item>two thousand</item>
+				<tag>$._value = 2000;</tag>
+				<item repeat="0-1">
+					<item repeat="0-1">and</item>
+					<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value;</tag>
+				</item>
+			</item>
+			<item>
+				<item>two</item>
+				<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				<tag>$._value = 2000;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value * 10;</tag>
+				<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<item>twenty</item>
+				<tag>$._value = 2000;</tag>
+				<one-of>
+					<item>
+						<ruleref uri="#Cardinal_10_to_99" type="application/srgs+xml"/>
+					</item>
+					<item>
+						<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+						<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+					</item>
+				</one-of>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<tag>$._attributes.name = "Derived";
+          $._attributes.form = "Short Form";</tag>
+				<one-of>
+					<item>
+						<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+						<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+					</item>
+					<item>
+						<ruleref uri="#Cardinal_10_to_99" type="application/srgs+xml"/>
+					</item>
+				</one-of>
+				<tag>$._value = $$._value;</tag>
+				<tag>if ($._value &gt;= 30) {
+            $._value = $._value + 1900;
+          }
+          else {
+            $._value = $._value + 2000;
+          }</tag>
+			</item>
+			<item>
+				<item>next year</item>
+				<tag>$._value = $._value + 1;
+          $._attributes.name = "Derived";
+          $._attributes.form = "Relative";</tag>
+			</item>
+			<item>
+				<item>this year</item>
+				<tag>$._value = $._value;
+          $._attributes.name = "Derived";
+          $._attributes.form = "Relative";</tag>
+			</item>
+			<item>
+				<item>last year</item>
+				<tag>$._value = $._value - 1;
+          $._attributes.name = "Derived";
+          $._attributes.form = "Relative";</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- $Cardinal_0._value: integer [0] -->
+	<rule id="Cardinal_0" scope="public">
+		<example>zero</example>
+		<one-of>
+			<item>zero</item>
+			<item>oh</item>
+		</one-of>
+		<tag>$._value = 0;</tag>
+	</rule>
+	<!--  Category: Time-->
+	<!--  Description: The Time rule provides for input of clock time quantities. -->
+	<!--  -->
+	<!--  $Time.Hour:-->
+	<!--    $Time.Hour._value: integer [0...23]-->
+	<!--    $Time.Hour._attributes.name: string ["Assumed", "Explicit"]-->
+	<!--  $Time.Minute:-->
+	<!--    $Time.Minute: integer [0...59]-->
+	<!--  $Time.AlternateHour._value: integer [0...23]-->
+	<!--  -->
+	<rule id="Time" scope="public">
+		<example>twelve a. m.</example>
+		<example>seven o'clock</example>
+		<example>seven thirty p. m.</example>
+		<example>five minutes before six o'clock p. m.</example>
+		<example>two past ten</example>
+		<example>a quarter before ten</example>
+		<example>half past three o'clock p. m.</example>
+		<example>three fifteen</example>
+		<example>six twenty at night</example>
+		<example>ten of five</example>
+		<tag>// only allows hours between 1 and 12
+  // if ampm is empty then the time is calculated to be am if hour is greater than 7 and pm otherwise
+  // returns a value between 0 and 23
+  function Hour24(hour, ampm) {
+		var retVal = hour;
+    
+    if ((hour &gt; 12) || (hour &lt; 0))
+      return retVal;
+      
+    if (ampm == "AM")
+    {
+      if (hour == 12)
+        retVal = 0;
+    }
+    else if (ampm == "PM")
+    {
+      if (hour &lt; 12)
+        retVal = hour + 12;
+    }
+    else
+    {
+      if (hour &lt; 7)
+        retVal = hour + 12;
+    }
+    
+    return retVal;
+  }</tag>
+		<tag>// only allows hours between 1 and 12
+  // returns a value between 0 and 23
+  function AlternateHour24(hour) {
+		var retVal = hour;
+    
+    if ((hour &gt; 12) || (hour &lt; 0))
+      return retVal;
+      
+    if (hour == 12)
+      retVal = 0;
+
+    else if (hour &gt; 6)
+      retVal = hour + 12;
+    
+    return retVal;
+  }</tag>
+		<tag>// only allows offsets between -59 and +59
+  function NormalizeHour(hour, offset) {
+		var retVal = hour;
+    
+    if (Math.abs(offset) &gt; 59)
+      return hour;
+    
+    if ((hour &gt; 23) || (hour &lt; 0))
+      return hour;
+      
+    retVal = (offset &lt; 0) ? retVal - 1 : retVal;
+    retVal = (retVal &lt; 0) ? 23 : retVal;
+    return retVal;
+	}</tag>
+		<tag>// only allows offsets between -59 and +59
+  function NormalizeMinute(offset) {
+		var retVal = 0;
+    
+    if (Math.abs(offset) &gt; 59)
+      return 0;
+    
+    retVal = (offset &lt; 0) ? 60 + offset: offset;
+    return retVal;
+	}</tag>
+		<tag>$.Hour = []; $.Minute = [];</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Time_Hour" type="application/srgs+xml"/>
+				<tag>$ = $$;
+          $.Minute = [];
+          $.Minute._value = 0;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Time_BeforeAfter" type="application/srgs+xml"/>
+				<tag>var offset = $$._value;</tag>
+				<ruleref uri="#Time_Hour" type="application/srgs+xml"/>
+				<tag>$ = $$;
+          $.Minute = [];
+          $.Hour._value = NormalizeHour($.Hour._value, offset);
+          $.Minute._value = NormalizeMinute(offset);
+          if (typeof($.AlternateHour) != "undefined") {
+            $.AlternateHour._value = NormalizeHour($.AlternateHour._value, offset);
+          }</tag>
+			</item>
+			<item>
+				<ruleref uri="#Time_HourNum" type="application/srgs+xml"/>
+				<tag>$.Hour._value = Hour24($$._value, "");
+          $.Hour._attributes.name = "Assumed";
+          $.AlternateHour = [];
+          $.AlternateHour._value = AlternateHour24($$._value);</tag>
+				<ruleref uri="#Time_Minute" type="application/srgs+xml"/>
+				<tag>$.Minute._value = $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Time_HourNum" type="application/srgs+xml"/>
+				<tag>$.Hour._value = $$._value;
+          $.Hour._attributes.name = "Explicit";</tag>
+				<ruleref uri="#Time_Minute" type="application/srgs+xml"/>
+				<tag>$.Minute._value = $$._value;</tag>
+				<ruleref uri="#Time_AmPm" type="application/srgs+xml"/>
+				<tag>$.Hour._value = Hour24($.Hour._value, $$._value);</tag>
+			</item>
+			<item>
+				<tag>var offset = 0;
+          $.Hour._attributes.name = "Explicit";
+          $.Minute._value = 0;</tag>
+				<item repeat="0-1">
+					<ruleref uri="#Time_BeforeAfter" type="application/srgs+xml"/>
+					<tag>offset = $$._value;</tag>
+				</item>
+				<one-of>
+					<item>
+						<item>noon</item>
+						<tag>$.Hour._value = 12;</tag>
+					</item>
+					<item>
+						<item>midnight</item>
+						<tag>$.Hour._value = 0;</tag>
+					</item>
+				</one-of>
+				<tag>$.Hour._value = NormalizeHour($.Hour._value, offset);
+          $.Minute._value = NormalizeMinute(offset);</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!--  $Time_Hour:-->
+	<!--    $Time_Hour.Hour:-->
+	<!--      $Time_Hour.Hour._value: integer [0...23]-->
+	<!--      $Time_Hour.Hour._attributes.name: string ["Assumed", "Explicit"]-->
+	<!--    $Time_Hour.AlternateHour._value: integer [0...23] optional-->
+	<!--  -->
+	<rule id="Time_Hour" scope="public">
+		<example>one</example>
+		<example>twelve</example>
+		<example>nine</example>
+		<tag>$.Hour = [];</tag>
+		<tag>// only allows hours between 1 and 12
+  // if ampm is empty then the time is calculated to be am if hour is greater than 7 and pm otherwise
+  // returns a value between 0 and 23
+  function Hour24(hour, ampm) {
+		var retVal = hour;
+    
+    if ((hour &gt; 12) || (hour &lt; 0))
+      return retVal;
+      
+    if (ampm == "AM")
+    {
+      if (hour == 12)
+        retVal = 0;
+    }
+    else if (ampm == "PM")
+    {
+      if (hour &lt; 12)
+        retVal = hour + 12;
+    }
+    else
+    {
+      if (hour &lt; 7)
+        retVal = hour + 12;
+    }
+    
+    return retVal;
+  }</tag>
+		<tag>// only allows hours between 1 and 12
+  // returns a value between 0 and 23
+  function AlternateHour24(hour) {
+		var retVal = hour;
+    
+    if ((hour &gt; 12) || (hour &lt; 0))
+      return retVal;
+      
+    if (hour == 12)
+      retVal = 0;
+
+    else if (hour &gt; 6)
+      retVal = hour + 12;
+    
+    return retVal;
+  }</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Time_HourNum" type="application/srgs+xml"/>
+				<item repeat="0-1">o'clock</item>
+				<tag>$.Hour._value = $$._value;       
+          $.AlternateHour = [];
+          $.AlternateHour._value = AlternateHour24($.Hour._value);
+          $.Hour._value = Hour24($.Hour._value, "");
+          $.Hour._attributes.name = "Assumed";</tag>
+			</item>
+			<item>
+				<ruleref uri="#Time_HourNum" type="application/srgs+xml"/>
+				<item repeat="0-1">o'clock</item>
+				<tag>$.Hour._value = $$._value;</tag>
+				<ruleref uri="#Time_AmPm" type="application/srgs+xml"/>
+				<tag>$.Hour._value = Hour24($.Hour._value, $$._value);
+          $.Hour._attributes.name = "Explicit";</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!--  $Time_HourNum:-->
+	<!--    $Time_HourNum._value: integer [1...12]-->
+	<!--  -->
+	<rule id="Time_HourNum" scope="public">
+		<example>one</example>
+		<example>twelve</example>
+		<example>nine</example>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+			</item>
+			<item>
+				<item>ten</item>
+				<tag>$._value = 10;</tag>
+			</item>
+			<item>
+				<item>eleven</item>
+				<tag>$._value = 11;</tag>
+			</item>
+			<item>
+				<item>twelve</item>
+				<tag>$._value = 12;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!--  $Time_BeforeAfter:-->
+	<!--    $Time_BeforeAfter._value: integer [-59...59]-->
+	<!--  -->
+	<rule id="Time_BeforeAfter" scope="public">
+		<example>a quarter after</example>
+		<example>a quarter till</example>
+		<example>half past</example>
+		<example>forty three before</example>
+		<example>seventeen minutes after</example>
+		<one-of>
+			<item>
+				<one-of>
+					<item>
+						<item repeat="0-1">a</item>
+						<item>quarter</item>
+						<tag>$._value = 15;</tag>
+					</item>
+					<item>
+						<ruleref uri="#Time_Minute" type="application/srgs+xml"/>
+						<item repeat="0-1">minutes</item>
+						<tag>$._value = $$._value;</tag>
+					</item>
+				</one-of>
+				<one-of>
+					<item>of</item>
+					<item>to</item>
+					<item>until</item>
+					<item>till</item>
+					<item>before</item>
+				</one-of>
+				<tag>$._value = 0 - $._value;</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>
+						<item repeat="0-1">a</item>
+						<item>half</item>
+						<tag>$._value = 30;</tag>
+					</item>
+					<item>
+						<item repeat="0-1">a</item>
+						<item>quarter</item>
+						<tag>$._value = 15;</tag>
+					</item>
+					<item>
+						<ruleref uri="#Time_Minute" type="application/srgs+xml"/>
+						<item repeat="0-1">minutes</item>
+						<tag>$._value = $$._value;</tag>
+					</item>
+				</one-of>
+				<one-of>
+					<item>past</item>
+					<item>after</item>
+				</one-of>
+				<tag>$._value = 0 + $._value;</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!--  $Time_Minute:-->
+	<!--    $Time_Minute._value: integer [1...59]-->
+	<!--  -->
+	<rule id="Time_Minute" scope="public">
+		<example>seven</example>
+		<example>fifteen</example>
+		<example>oh nine</example>
+		<example>twenty three</example>
+		<one-of>
+			<item>
+				<item repeat="0-1">
+					<ruleref uri="#Cardinal_0" type="application/srgs+xml"/>
+				</item>
+				<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_10_to_19" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>
+						<item>twenty</item>
+						<tag>$._value = 20;</tag>
+					</item>
+					<item>
+						<item>thirty</item>
+						<tag>$._value = 30;</tag>
+					</item>
+					<item>
+						<item>forty</item>
+						<tag>$._value = 40;</tag>
+					</item>
+					<item>
+						<item>fifty</item>
+						<tag>$._value = 50;</tag>
+					</item>
+				</one-of>
+				<item repeat="0-1">
+					<ruleref uri="#Cardinal_1_to_9" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value;</tag>
+				</item>
+			</item>
+		</one-of>
+	</rule>
+	<!--  $Time_AmPm:-->
+	<!--    $Time_AmPm._value: string ["AM", "PM"]-->
+	<!--  -->
+	<rule id="Time_AmPm" scope="public">
+		<example>A. M.</example>
+		<example>P. M.</example>
+		<example>in the evening</example>
+		<example>in the morning</example>
+		<one-of>
+			<item>
+				<one-of>
+					<item>A. M.</item>
+					<item>in the morning</item>
+					<item>this morning</item>
+				</one-of>
+				<tag>$._value = "AM";</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>P. M.</item>
+					<item>in the afternoon</item>
+					<item>in the evening</item>
+					<item>this afternoon</item>
+					<item>this evening</item>
+					<item>at night</item>
+				</one-of>
+				<tag>$._value = "PM";</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!--  Category: Currency_US-->
+	<!--  Description: The Currency_US rules describes a quantity of currency up to 1 million dollars and 99 cents. -->
+	<!--    There are rules that limit the quantity that will be accepted. These rules are named with the limit in the title.-->
+	<!--    For example Currency_US_upto1000 accepts whole quantities upto and and including $1000.99-->
+	<!--  -->
+	<!-- -->
+	<!--  Currency_US._value: float [0.00 ... 1000000.99]-->
+	<!-- -->
+	<rule id="Currency_US" scope="public">
+		<example>twelve dollars and ninety five cents</example>
+		<example>sixty eight dollars</example>
+		<example>one hundred seventy three</example>
+		<tag>$._value = 0.00;</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+				<one-of>
+					<item>dollar</item>
+					<item>dollars</item>
+				</one-of>
+				<item repeat="0-1">
+					<item repeat="0-1">and</item>
+					<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value * 0.01;</tag>
+					<one-of>
+						<item>cent</item>
+						<item>cents</item>
+					</one-of>
+				</item>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $$._value * 0.01;</tag>
+				<one-of>
+					<item>cent</item>
+					<item>cents</item>
+				</one-of>
+			</item>
+		</one-of>
+	</rule>
+	<!-- -->
+	<!--  Currency_US_upto100._value: float [0.00 ... 100.00]-->
+	<!-- -->
+	<rule id="Currency_US_upto100" scope="public">
+		<example>twelve dollars and ninety five cents</example>
+		<example>sixty eight dollars</example>
+		<example>one hundred dollars</example>
+		<tag>$._value = 0.00;</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+				<one-of>
+					<item>dollar</item>
+					<item>dollars</item>
+				</one-of>
+				<item repeat="0-1">
+					<item repeat="0-1">and</item>
+					<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value * 0.01;</tag>
+					<one-of>
+						<item>cent</item>
+						<item>cents</item>
+					</one-of>
+				</item>
+			</item>
+			<item>
+				<item>one hundred dollars</item>
+				<tag>$._value = 100.00;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $$._value * 0.01;</tag>
+				<one-of>
+					<item>cent</item>
+					<item>cents</item>
+				</one-of>
+			</item>
+		</one-of>
+	</rule>
+	<!-- -->
+	<!--  Currency_US_upto1000._value: float [0.00 ... 1000.00]-->
+	<!-- -->
+	<rule id="Currency_US_upto1000" scope="public">
+		<example>twelve dollars and ninety five cents</example>
+		<example>sixty eight dollars</example>
+		<example>one hundred and sixty three</example>
+		<example>one thousand dollars</example>
+		<tag>$._value = 0.00;</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+				<one-of>
+					<item>dollar</item>
+					<item>dollars</item>
+				</one-of>
+				<item repeat="0-1">
+					<item repeat="0-1">and</item>
+					<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value * 0.01;</tag>
+					<one-of>
+						<item>cent</item>
+						<item>cents</item>
+					</one-of>
+				</item>
+			</item>
+			<item>
+				<item>one thousand dollars</item>
+				<tag>$._value = 1000.00;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_999" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $$._value * 0.01;</tag>
+				<one-of>
+					<item>cent</item>
+					<item>cents</item>
+				</one-of>
+			</item>
+		</one-of>
+	</rule>
+	<!-- -->
+	<!--  Currency_US_upto10000._value: float [0.00 ... 10000.00]-->
+	<!-- -->
+	<rule id="Currency_US_upto10000" scope="public">
+		<example>twelve dollars and ninety five cents</example>
+		<example>sixty eight dollars</example>
+		<example>one hundred and sixty three</example>
+		<example>five thousand three hundred and twenty two dollars</example>
+		<example>ten thousand dollars</example>
+		<tag>$._value = 0.00;</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_1_to_9999" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+				<one-of>
+					<item>dollar</item>
+					<item>dollars</item>
+				</one-of>
+				<item repeat="0-1">
+					<item repeat="0-1">and</item>
+					<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+					<tag>$._value = $._value + $$._value * 0.01;</tag>
+					<one-of>
+						<item>cent</item>
+						<item>cents</item>
+					</one-of>
+				</item>
+			</item>
+			<item>
+				<item>ten thousand dollars</item>
+				<tag>$._value = 10000.00;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_9999" type="application/srgs+xml"/>
+				<tag>$._value = $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_1_to_99" type="application/srgs+xml"/>
+				<tag>$._value = $$._value * 0.01;</tag>
+				<one-of>
+					<item>cent</item>
+					<item>cents</item>
+				</one-of>
+			</item>
+		</one-of>
+	</rule>
+	<!--  Category: PhoneNumber_US-->
+	<!--  Description: The PhoneNumber_US rules are used to parse a US phone number including (optionally) the area code.-->
+	<!--  -->
+	<!-- -->
+	<!--  PhoneNumber_US._value: string [11,10 or 7 characters]-->
+	<!--  PhoneNumber_US.AreaCode._value: string [3 characters]-->
+	<!--  PhoneNumber_US.LocalNumber._value: string [7 characters]-->
+	<!--  -->
+	<rule id="PhoneNumber_US" scope="public">
+		<example>one two three four five six seven eight nine eight nine</example>
+		<example>two three four five six seven eight nine eight nine</example>
+		<example>five six seven eight nine eight nine</example>
+		<tag>$._value = '';</tag>
+		<item repeat="0-1">
+			<item>one</item>
+			<tag>$._value = $._value + '1';</tag>
+		</item>
+		<item repeat="0-1">
+			<ruleref uri="#PhoneNumber_US_AreaCode" type="application/srgs+xml"/>
+			<tag>$.AreaCode = [];
+        $._value = $._value + $$._value;
+        $.AreaCode._value = $$._value;</tag>
+		</item>
+		<ruleref uri="#PhoneNumber_US_LocalNumber" type="application/srgs+xml"/>
+		<tag>$.LocalNumber = [];
+      $._value = $._value + $$._value;
+      $.LocalNumber._value = $$._value;</tag>
+	</rule>
+	<!-- -->
+	<!--  PhoneNumber_US_with_Extension._value: string [11,10 or 7 plus 2-5 characters for an optional extension starting with "x"]-->
+	<!--  PhoneNumber_US_with_Extension.AreaCode._value: string [3 characters]-->
+	<!--  PhoneNumber_US_with_Extension.LocalNumber._value: string [7 characters]-->
+	<!--  PhoneNumber_US_with_Extension.Extension._value: string [1-4 characters]-->
+	<!-- -->
+	<rule id="PhoneNumber_US_with_Extension" scope="public">
+		<example>one two three four five six seven eight nine eight nine extension two three four</example>
+		<example>two three four five six seven eight nine eight nine  extension two three four</example>
+		<example>five six seven eight nine eight nine extension two three four</example>
+		<example>one two three four five six seven eight nine eight nine</example>
+		<example>two three four five six seven eight nine eight nine</example>
+		<example>five six seven eight nine eight nine</example>
+		<tag>$._value = '';</tag>
+		<item repeat="0-1">
+			<item>one</item>
+			<tag>$._value = $._value + '1';</tag>
+		</item>
+		<item repeat="0-1">
+			<ruleref uri="#PhoneNumber_US_AreaCode" type="application/srgs+xml"/>
+			<tag>$.AreaCode = [];
+        $._value = $._value + $$._value;
+        $.AreaCode._value = $$._value;</tag>
+		</item>
+		<ruleref uri="#PhoneNumber_US_LocalNumber" type="application/srgs+xml"/>
+		<tag>$.LocalNumber = [];
+	  $._value = $._value + $$._value;
+      $.LocalNumber._value = $$._value;</tag>
+		<item repeat="0-1">
+			<item>extension</item>
+			<one-of>
+				<item>
+					<ruleref uri="#Cardinal_0_to_9" type="application/srgs+xml"/>
+					<tag>$.Extension = [];
+            $._value = $._value + "x" + $$._value;
+            $.Extension._value = $$._value;</tag>
+				</item>
+				<item>
+					<ruleref uri="#DigitBlock_2Digits" type="application/srgs+xml"/>
+					<tag>$.Extension = [];
+            $._value = $._value + "x" + $$._value;
+            $.Extension._value = $$._value;</tag>
+				</item>
+				<item>
+					<ruleref uri="#DigitBlock_3Digits" type="application/srgs+xml"/>
+					<tag>$.Extension = [];
+            $._value = $._value + "x" + $$._value;
+            $.Extension._value = $$._value;</tag>
+				</item>
+				<item>
+					<ruleref uri="#DigitBlock_4Digits" type="application/srgs+xml"/>
+					<tag>$.Extension = [];
+            $._value = $._value + "x" + $$._value;
+            $.Extension._value = $$._value;</tag>
+				</item>
+			</one-of>
+		</item>
+	</rule>
+	<!-- -->
+	<!--  PhoneNumber_US_AreaCode._value: string [3 characters]-->
+	<!--  US area codes can not begin with 0 or 1-->
+	<!-- -->
+	<rule id="PhoneNumber_US_AreaCode" scope="public">
+		<example>two three four</example>
+		<example>five six seven</example>
+		<example>eight hundred</example>
+		<tag>$._value = '';</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_2_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#DigitBlock_2Digits" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_2_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<item>hundred</item>
+				<tag>$._value = $._value + '00';</tag>
+			</item>
+		</one-of>
+	</rule>
+	<!-- -->
+	<!--  PhoneNumber_US_LocalNumber._value: string [7 characters]-->
+	<!--  US Local Numbers can not begin with 0 or 1-->
+	<!-- -->
+	<rule id="PhoneNumber_US_LocalNumber" scope="public">
+		<example>two three four five six seven eight</example>
+		<example>five six seven two three four five</example>
+		<example>eight hundred four five six seven</example>
+		<tag>$._value = '';</tag>
+		<one-of>
+			<item>
+				<ruleref uri="#Cardinal_2_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<ruleref uri="#DigitBlock_2Digits" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+			</item>
+			<item>
+				<ruleref uri="#Cardinal_2_to_9" type="application/srgs+xml"/>
+				<tag>$._value = $._value + $$._value;</tag>
+				<item>hundred</item>
+				<tag>$._value = $._value + '00';</tag>
+			</item>
+		</one-of>
+		<ruleref uri="#DigitBlock_4Digits" type="application/srgs+xml"/>
+		<tag>$._value = $._value + $$._value;</tag>
+	</rule>
+	<rule id="Product" scope="public">
+		<one-of>
+			<item>
+				<?MS_Grammar_Editor GroupWrap?>
+				<item>Widget</item>
+				<tag>$._value = "Widget"</tag>
+			</item>
+			<item>
+				<?MS_Grammar_Editor GroupWrap?>
+				<item>Sprocket</item>
+				<tag>$._value = "Sprocket"</tag>
+			</item>
+			<item>
+				<?MS_Grammar_Editor GroupWrap?>
+				<item>Gadget</item>
+				<tag>$._value = "Gadget"</tag>
+			</item>
+		</one-of>
+	</rule>
+	<rule id="Size" scope="public">
+		<one-of>
+			<item>
+				<?MS_Grammar_Editor GroupWrap?>
+				<item>Large</item>
+				<tag>$._value = "Large"</tag>
+			</item>
+			<item>
+				<?MS_Grammar_Editor GroupWrap?>
+				<item>Medium</item>
+				<tag>$._value = "Medium"</tag>
+			</item>
+			<item>
+				<?MS_Grammar_Editor GroupWrap?>
+				<item>Small</item>
+				<tag>$._value = "Small"</tag>
+			</item>
+		</one-of>
+	</rule>
+	<rule id="Color" scope="public">
+		<one-of>
+			<item>
+				<?MS_Grammar_Editor GroupWrap?>
+				<item>Blue</item>
+				<tag>$._value = "Blue"</tag>
+			</item>
+			<item>
+				<?MS_Grammar_Editor GroupWrap?>
+				<item>White</item>
+				<tag>$._value = "White"</tag>
+			</item>
+			<item>
+				<?MS_Grammar_Editor GroupWrap?>
+				<item>Red</item>
+				<tag>$._value = "Red"</tag>
+			</item>
+		</one-of>
+	</rule>
+</grammar>

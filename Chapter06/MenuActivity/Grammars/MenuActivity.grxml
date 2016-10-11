@@ -1,0 +1,4 @@
+<grammar xml:lang="en-US" version="1.0" xmlns="http://www.w3.org/2001/06/grammar" xmlns:sapi="http://schemas.microsoft.com/Speech/2002/06/SRGSExtensions" tag-format="semantics-ms/1.0">
+  <lexicon uri="..\Lexicons\MenuActivity.lex"/>
+  <rule id="Rule1" scope="public"></rule>
+</grammar>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vxml version="2.0" xml:lang="en-US" xmlns="http://www.w3.org/2001/vxml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/vxml http://www.w3.org/TR/voicexml20/vxml.xsd">
+
+  <var name="productName" />
+  <var name="productColor" />
+  <var name="productSize" />
+
+  <form id="Support" scope="dialog">
+    <block>
+      <prompt>Welcome to A B C Company Ordering System</prompt>
+    </block>
+
+    <field name="askProduct">
+      <prompt>
+        Would you like to order a Gadget,
+        Sprocket or Widget?
+      </prompt>
+      <grammar mode="voice" xml:lang="en-US" version="1.0" root="productNames">
+        <rule id="productNames" scope="public">
+          <one-of>
+            <item> gadget </item>
+            <item> sprocket </item>
+            <item> widget</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <filled>
+        <assign name="document.productName" expr="askProduct"/>
+      </filled>
+
+    </field>
+
+    <field name="askSize">
+      <prompt>
+        Do you want that in small, medium or large?
+      </prompt>
+      <grammar mode="voice" xml:lang="en-US" version="1.0" root="productSizes">
+        <rule id="productSizes" scope="public">
+          <one-of>
+            <item> small </item>
+            <item> medium </item>
+            <item> large </item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <filled>
+        <assign name="document.productSize" expr="askSize"/>
+      </filled>
+
+    </field>
+
+    <field name="askColor">
+      <prompt>
+        Do you want that in red, white or
+        blue?
+      </prompt>
+      <grammar mode="voice" xml:lang="en-US" version="1.0" root="productColors">
+        <rule id="productColors" scope="public">
+          <one-of>
+            <item> red </item>
+            <item> white </item>
+            <item> blue </item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <filled>
+        <assign name="document.productColor" expr="askColor"/>
+      </filled>
+
+    </field>
+
+    <filled mode="all">
+      <goto next="#confirmOrder"/>
+    </filled>
+
+  </form>
+
+  <form id="confirmOrder" scope="dialog">
+    <block>
+      <prompt>
+        You ordered a
+        <value expr="document.productSize"/><break/>
+        <value expr="document.productColor"/><break/>
+        <value expr="document.productName"/>
+      </prompt>
+    </block>
+  </form>
+
+</vxml>
+

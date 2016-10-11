@@ -1,0 +1,7 @@
+Bin\Chapter06.dll
+Bin\Chapter06.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\Chapter06.PromptStrings.resources
+obj\Debug\Chapter06.csproj.GenerateResource.Cache
+obj\Debug\Chapter06.dll
+obj\Debug\Chapter06.pdb

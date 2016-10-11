@@ -1,0 +1,93 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4A2861BF-2AA2-4CCD-A468-D037DF53CD6D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Chapter07</RootNamespace>
+    <AssemblyName>Chapter07</AssemblyName>
+    <!-- Here the pattern is WORKFLOW GUID followed by CSHARP GUID -->
+    <ProjectTypeGuids>{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Workflow.Activities" />
+    <Reference Include="System.Workflow.ComponentModel" />
+    <Reference Include="System.Workflow.Runtime" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="Microsoft.SpeechServer, Version=2.0.3400.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <None Include="Chapter07.speax" />
+    <None Include="Outbound.aspx" />
+    <Compile Include="EWSAPI.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.cs</LastGenOutput>
+    </None>
+    <Compile Include="VoiceResponseWorkflow1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="VoiceResponseWorkflow1.designer.cs">
+      <DependentUpon>VoiceResponseWorkflow1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PromptStrings.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Grammars\Chapter07.grxml" />
+    <Content Include="Grammars\Library.grxml" />
+    <Content Include="manifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <CALFile Include="Lexicons\Chapter07.cal" />
+  </ItemGroup>
+  <ItemGroup>
+    <CGBFile Include="Grammars\Chapter07.gbuilder" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Windows Workflow Foundation\v3.0\Workflow.Targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Microsoft Office Communications Server 2007 Speech Server\v2.0\GrammarBuilder.Targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Microsoft Office Communications Server 2007 Speech Server\v2.0\LexiconBuilder.Targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLCID="1033" ProjectType="V2WF" ProjectURL="http://localhost/Chapter07/Chapter07.speax" HandledCAL_EN-US="Lexicons\Chapter07.lex" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

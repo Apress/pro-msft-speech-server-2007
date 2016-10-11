@@ -1,0 +1,31 @@
+﻿"General"
+{
+}
+"Configurations"
+{
+    "Debug|Win32"
+    {
+    "Format" = "ulaw"
+    "Freq" = "8000"
+    "Filler" = "0"
+    "Norm" = "none"
+    "Output" = "..\\Prompts\\MenuActivityPrompts.prompts"
+	"Language" = "en-US"
+    }
+    "Release|Win32"
+    {
+    "Format" = "ulaw"
+    "Freq" = "8000"
+    "Filler" = "0"
+    "Norm" = "none"
+    "Output" = "..\\Prompts\\MenuActivityPrompts.prompts"
+	"Language" = "en-US"
+    }
+}
+"Files"
+{
+    "Prompts.promptdb"
+    {
+    "ProjRelPath" = "T"
+    }
+}
